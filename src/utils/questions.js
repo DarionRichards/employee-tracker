@@ -37,4 +37,10 @@ const introQuestions = [{
     ],
 }, ];
 
-module.exports = { introQuestions };
+const departmentQuestions = [{
+    type: "input",
+    name: "departmentName",
+    message: "Please enter the related Department Name: ",
+}, ];
+
+module.exports = { introQuestions, departmentQuestions };
