@@ -40,7 +40,19 @@ const introQuestions = [{
 const departmentQuestions = [{
     type: "input",
     name: "departmentName",
-    message: "Please enter the related Department Name: ",
+    message: "Please enter the Department name: ",
 }, ];
 
-module.exports = { introQuestions, departmentQuestions };
+const roleQuestions = [{
+        type: "input",
+        name: "name",
+        message: "Enter the name for the role:",
+    },
+    {
+        type: "input",
+        name: "salary",
+        message: "Enter salary for the role: ",
+    },
+];
+
+module.exports = { introQuestions, departmentQuestions, roleQuestions };

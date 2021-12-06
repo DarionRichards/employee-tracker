@@ -2,27 +2,30 @@
 const inquirer = require("inquirer");
 
 // import questions
-const { introQuestions, departmentQuestions } = require("./utils/questions");
+const {
+    introQuestions,
+    departmentQuestions,
+    roleQuestions,
+} = require("./utils/questions");
 
-const askIntroQuestions = async() => {
-    const optionChosen = await inquirer.prompt(introQuestions);
-    return optionChosen;
-};
+const askIntroQuestions = async() => await inquirer.prompt(introQuestions);
 
-const askDepartmentQuestions = async() => {
-    const departmentName = await inquirer.prompt(departmentQuestions);
-    return departmentName;
-};
+const askDepartmentQuestions = async() =>
+    await inquirer.prompt(departmentQuestions);
+
+const askRoleQuestions = async() => await inquirer.prompt(roleQuestions);
 
 const start = async() => {
     const optionChosen = await askIntroQuestions();
 
     if (optionChosen.option === "addDepartment") {
-        const departmentName = await askDepartmentQuestions();
-        console.log(departmentName);
+        const department = await askDepartmentQuestions();
+        console.log(department);
     }
     if (optionChosen.option === "addRole") {
-        // ask role quesitons
+        // get departments, if non dont proceed.
+        const roleAnswers = await askRoleQuestions();
+        console.log(roleAnswers);
     }
     if (optionChosen.option === "addEmployee") {
         // ask role quesitons
