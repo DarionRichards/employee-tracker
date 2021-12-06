@@ -6,6 +6,7 @@ const {
     introQuestions,
     departmentQuestions,
     roleQuestions,
+    employeeQuestions,
 } = require("./utils/questions");
 
 const askIntroQuestions = async() => await inquirer.prompt(introQuestions);
@@ -14,6 +15,9 @@ const askDepartmentQuestions = async() =>
     await inquirer.prompt(departmentQuestions);
 
 const askRoleQuestions = async() => await inquirer.prompt(roleQuestions);
+
+const askEmployeeQuestions = async() =>
+    await inquirer.prompt(employeeQuestions);
 
 const start = async() => {
     const optionChosen = await askIntroQuestions();
@@ -28,7 +32,8 @@ const start = async() => {
         console.log(roleAnswers);
     }
     if (optionChosen.option === "addEmployee") {
-        // ask role quesitons
+        const employeAnswers = await askEmployeeQuestions();
+        console.log(employeAnswers);
     }
 };
 

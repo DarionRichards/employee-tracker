@@ -55,4 +55,21 @@ const roleQuestions = [{
     },
 ];
 
-module.exports = { introQuestions, departmentQuestions, roleQuestions };
+const employeeQuestions = [{
+        type: "input",
+        name: "firstName",
+        message: "Enter the first name: ",
+    },
+    {
+        type: "input",
+        name: "lastName",
+        message: "Enter the last name: ",
+    },
+];
+
+module.exports = {
+    introQuestions,
+    departmentQuestions,
+    roleQuestions,
+    employeeQuestions,
+};
