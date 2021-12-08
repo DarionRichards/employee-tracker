@@ -20,20 +20,37 @@ const askEmployeeQuestions = async() =>
     await inquirer.prompt(employeeQuestions);
 
 const start = async() => {
-    const optionChosen = await askIntroQuestions();
+    let active = true;
+    let departmentArray = [];
+    let roleArray = [];
+    let employeeArray = [];
 
-    if (optionChosen.option === "addDepartment") {
-        const department = await askDepartmentQuestions();
-        console.log(department);
-    }
-    if (optionChosen.option === "addRole") {
-        // get departments, if non dont proceed.
-        const roleAnswers = await askRoleQuestions();
-        console.log(roleAnswers);
-    }
-    if (optionChosen.option === "addEmployee") {
-        const employeAnswers = await askEmployeeQuestions();
-        console.log(employeAnswers);
+    while (active) {
+        const { option } = await askIntroQuestions();
+
+        if (option === "addDepartment") {
+            const departmentName = await askDepartmentQuestions();
+            departmentArray.push(departmentName);
+            console.log(departmentArray);
+        }
+        if (option === "addRole") {
+            // get departments, if non dont proceed.
+            const roleAnswers = await askRoleQuestions();
+            roleArray.push(roleAnswers);
+            console.log(roleAnswers);
+        }
+        if (option === "addEmployee") {
+            const employeeAnswers = await askEmployeeQuestions();
+            employeeArray.push(employeeAnswers);
+            console.log(employeeAnswers);
+        }
+        if (option === "updateEmployeeRole") {
+            console.log("Update Employees");
+        }
+        if (option === "quit") {
+            active = false;
+            console.log("Goodbye!");
+        }
     }
 };
 
