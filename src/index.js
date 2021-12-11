@@ -9,6 +9,10 @@ const {
     employeeQuestions,
 } = require("./utils/questions");
 
+// import DB
+const Db = require("./db/Db");
+
+// ask functions
 const askIntroQuestions = async() => await inquirer.prompt(introQuestions);
 
 const askDepartmentQuestions = async() =>
@@ -19,30 +23,37 @@ const askRoleQuestions = async() => await inquirer.prompt(roleQuestions);
 const askEmployeeQuestions = async() =>
     await inquirer.prompt(employeeQuestions);
 
+// start app
 const start = async() => {
+    const db = new Db({
+        host: process.env.DB_HOST || "localhost",
+        user: process.env.DB_USER || "root",
+        password: process.env.DB_PASSWORD || "password123",
+        database: process.env.DB_NAME || "company_db",
+    });
+
+    await db.start();
+
     let active = true;
-    let departmentArray = [];
-    let roleArray = [];
-    let employeeArray = [];
 
     while (active) {
         const { option } = await askIntroQuestions();
 
         if (option === "addDepartment") {
-            const departmentName = await askDepartmentQuestions();
-            departmentArray.push(departmentName);
-            console.log(departmentArray);
+            const { departmentName } = await askDepartmentQuestions();
+
+            const query = `INSERT INTO department (name) VALUES ('${departmentName}');`;
+            const data = await db.query(query);
+
+            console.log(`Added ${departmentName} into database!`);
+            console.table(data);
         }
         if (option === "addRole") {
             // get departments, if non dont proceed.
             const roleAnswers = await askRoleQuestions();
-            roleArray.push(roleAnswers);
-            console.log(roleAnswers);
         }
         if (option === "addEmployee") {
             const employeeAnswers = await askEmployeeQuestions();
-            employeeArray.push(employeeAnswers);
-            console.log(employeeAnswers);
         }
         if (option === "updateEmployeeRole") {
             console.log("Update Employees");
