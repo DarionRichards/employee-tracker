@@ -33,11 +33,8 @@ VALUES
 ("Rudy", "John", "7"),
 ("Chanelle", "Leigh", "8");
 
-UPDATE employee SET manager_id = 1 WHERE (id = 2);
-UPDATE employee SET manager_id = 3 WHERE (id = 4);
-UPDATE employee SET manager_id = 3 WHERE (id = 5);
-UPDATE employee SET manager_id = 3 WHERE (id = 6);
-UPDATE employee SET manager_id = 7 WHERE (id = 8);
-UPDATE employee SET manager_id = 7 WHERE (id = 9);
-UPDATE employee SET manager_id = 7 WHERE (id = 10);
-UPDATE employee SET manager_id = 11 WHERE (id = 12);
+UPDATE employee SET manager_id = 1 WHERE (role_id = 2);
+UPDATE employee SET manager_id = 3 WHERE (role_id = 4);
+UPDATE employee SET manager_id = 5 WHERE (role_id = 6);
+UPDATE employee SET manager_id = 7 WHERE (role_id = 8);
+
