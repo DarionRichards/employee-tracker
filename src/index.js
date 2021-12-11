@@ -41,22 +41,22 @@ const start = async() => {
             const { departmentName } = await askDepartmentQuestions();
 
             const query = `INSERT INTO department (name) VALUES ('${departmentName}');`;
-            const data = await db.query(query);
+            await db.query(query);
 
             console.log(`Added ${departmentName} into database!`);
         }
 
         if (option === "addRole") {
             // get departments, if non dont proceed.
-            const getDepartments = `SELECT * FROM department;`;
-            const departments = await db.query(getDepartments);
+            const query = `SELECT * FROM department;`;
+            const departments = await db.query(query);
 
             if (departments.length) {
                 const questions = await roleQuestions(db);
                 const { name, salary, department_id } = await inquirer.prompt(questions);
 
                 const query = `INSERT INTO role (title, salary, department_id) VALUES ("${name}", "${salary}", "${department_id}");`;
-                const data = await db.query(query);
+                await db.query(query);
                 console.log(`Added ${name} into Role Table!`);
             } else {
                 console.log("[ERROR]: Please enter a department before proceeding...");
@@ -64,7 +64,23 @@ const start = async() => {
         }
 
         if (option === "addEmployee") {
-            const employeeAnswers = await askEmployeeQuestions();
+            // get roles
+            const query = `SELECT * FROM role;`;
+            const role = await db.query(query);
+
+            // if no roles, dont proceed
+            if (role.length) {
+                // get employee answers
+                const questions = await employeeQuestions(db);
+                const { firstName, lastName, role_id } = await inquirer.prompt(questions);
+
+                // query to database
+                const query = `INSERT INTO employee (first_name, last_name, role_id) VALUES ("${firstName}","${lastName}","${role_id}");`;
+                await db.query(query);
+                console.log(`Created ${firstName} ${lastName} as an employee!`);
+            } else {
+                console.log("[ERROR]: Please enter a role before proceeding...");
+            }
         }
         if (option === "updateEmployeeRole") {
             console.log("Update Employees");

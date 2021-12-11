@@ -1,32 +1,32 @@
-const { getDepartments } = require("./choices");
+const { getDepartments, getRoles } = require("./choices");
 
 const introQuestions = [{
     type: "list",
     name: "option",
     message: "Please choose from one of the following options: ",
     choices: [{
-            name: "View Departments",
-            value: "viewDepartments",
-        },
-        {
-            name: "View Roles",
-            value: "viewRoles",
-        },
-        {
-            name: "View Employees",
-            value: "viewEmployees",
-        },
-        {
             name: "Add a Department",
             value: "addDepartment",
+        },
+        {
+            name: "View All Departments",
+            value: "viewDepartments",
         },
         {
             name: "Add a Role",
             value: "addRole",
         },
         {
+            name: "View All Roles",
+            value: "viewRoles",
+        },
+        {
             name: "Add a Employee",
             value: "addEmployee",
+        },
+        {
+            name: "View All Employees",
+            value: "viewEmployees",
         },
         {
             name: "Add an Employee's Role",
@@ -65,17 +65,25 @@ const roleQuestions = async(db) => {
     ];
 };
 
-const employeeQuestions = [{
-        type: "input",
-        name: "firstName",
-        message: "Enter the first name:",
-    },
-    {
-        type: "input",
-        name: "lastName",
-        message: "Enter the last name:",
-    },
-];
+const employeeQuestions = async(db) => {
+    return [{
+            type: "input",
+            name: "firstName",
+            message: "Enter the first name:",
+        },
+        {
+            type: "input",
+            name: "lastName",
+            message: "Enter the last name:",
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "Please choose corresponding role for the employee:",
+            choices: await getRoles(db),
+        },
+    ];
+};
 
 module.exports = {
     introQuestions,
