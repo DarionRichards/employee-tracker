@@ -18,8 +18,6 @@ const askIntroQuestions = async() => await inquirer.prompt(introQuestions);
 const askDepartmentQuestions = async() =>
     await inquirer.prompt(departmentQuestions);
 
-const askRoleQuestions = async() => await inquirer.prompt(roleQuestions);
-
 const askEmployeeQuestions = async() =>
     await inquirer.prompt(employeeQuestions);
 
@@ -46,12 +44,25 @@ const start = async() => {
             const data = await db.query(query);
 
             console.log(`Added ${departmentName} into database!`);
-            console.table(data);
         }
+
         if (option === "addRole") {
             // get departments, if non dont proceed.
-            const roleAnswers = await askRoleQuestions();
+            const getDepartments = `SELECT * FROM department;`;
+            const departments = await db.query(getDepartments);
+
+            if (departments.length) {
+                const questions = await roleQuestions(db);
+                const { name, salary, department_id } = await inquirer.prompt(questions);
+
+                const query = `INSERT INTO role (title, salary, department_id) VALUES ("${name}", "${salary}", "${department_id}");`;
+                const data = await db.query(query);
+                console.log(`Added ${name} into Role Table!`);
+            } else {
+                console.log("[ERROR]: Please enter a department before proceeding...");
+            }
         }
+
         if (option === "addEmployee") {
             const employeeAnswers = await askEmployeeQuestions();
         }

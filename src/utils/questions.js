@@ -1,3 +1,5 @@
+const { getDepartments } = require("./choices");
+
 const introQuestions = [{
     type: "list",
     name: "option",
@@ -40,30 +42,38 @@ const introQuestions = [{
 const departmentQuestions = [{
     type: "input",
     name: "departmentName",
-    message: "Please enter the Department name: ",
+    message: "Please enter the Department name:",
 }, ];
 
-const roleQuestions = [{
-        type: "input",
-        name: "name",
-        message: "Enter the name for the role:",
-    },
-    {
-        type: "input",
-        name: "salary",
-        message: "Enter salary for the role: ",
-    },
-];
+const roleQuestions = async(db) => {
+    return [{
+            type: "input",
+            name: "name",
+            message: "Enter the name for the role:",
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "Enter salary for the role:",
+        },
+        {
+            type: "list",
+            name: "department_id",
+            message: "Please choose corresponding department for the role:",
+            choices: await getDepartments(db),
+        },
+    ];
+};
 
 const employeeQuestions = [{
         type: "input",
         name: "firstName",
-        message: "Enter the first name: ",
+        message: "Enter the first name:",
     },
     {
         type: "input",
         name: "lastName",
-        message: "Enter the last name: ",
+        message: "Enter the last name:",
     },
 ];
 
