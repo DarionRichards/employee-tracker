@@ -46,6 +46,12 @@ const start = async() => {
             console.log(`Added ${departmentName} into database!`);
         }
 
+        if (option === "viewDepartment") {
+            const query = "SELECT * FROM department";
+            const data = await db.query(query);
+            console.table(data);
+        }
+
         if (option === "addRole") {
             // get departments, if non dont proceed.
             const query = `SELECT * FROM department;`;
@@ -61,6 +67,12 @@ const start = async() => {
             } else {
                 console.log("[ERROR]: Please enter a department before proceeding...");
             }
+        }
+
+        if (option === "viewRole") {
+            const query = "SELECT * FROM role";
+            const data = await db.query(query);
+            console.table(data);
         }
 
         if (option === "addEmployee") {
@@ -82,6 +94,13 @@ const start = async() => {
                 console.log("[ERROR]: Please enter a role before proceeding...");
             }
         }
+
+        if (option === "viewEmployee") {
+            const query = "SELECT * FROM employee";
+            const data = await db.query(query);
+            console.table(data);
+        }
+
         if (option === "updateEmployeeRole") {
             console.log("Update Employees");
         }

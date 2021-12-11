@@ -10,7 +10,7 @@ const introQuestions = [{
         },
         {
             name: "View All Departments",
-            value: "viewDepartments",
+            value: "viewDepartment",
         },
         {
             name: "Add a Role",
@@ -18,7 +18,7 @@ const introQuestions = [{
         },
         {
             name: "View All Roles",
-            value: "viewRoles",
+            value: "viewRole",
         },
         {
             name: "Add a Employee",
@@ -26,7 +26,7 @@ const introQuestions = [{
         },
         {
             name: "View All Employees",
-            value: "viewEmployees",
+            value: "viewEmployee",
         },
         {
             name: "Add an Employee's Role",
