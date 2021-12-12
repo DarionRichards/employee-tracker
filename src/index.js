@@ -127,6 +127,13 @@ const start = async() => {
                 await db.query(query);
             }
         }
+
+        if (option === "viewManager") {
+            const managerQuery =
+                "SELECT first_name AS firstName, last_name AS lastName FROM employee WHERE manager_id IS NULL;";
+            const data = await db.query(managerQuery);
+            console.table(data);
+        }
         if (option === "quit") {
             active = false;
             db.end();

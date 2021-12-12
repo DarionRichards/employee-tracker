@@ -37,6 +37,10 @@ const introQuestions = [{
             value: "updateEmployeeManager",
         },
         {
+            name: "View All Managers",
+            value: "viewManager",
+        },
+        {
             name: "Quit",
             value: "quit",
         },
