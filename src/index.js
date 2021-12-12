@@ -93,7 +93,9 @@ const start = async() => {
             }
         }
         if (option === "viewEmployee") {
-            const data = await selectAllFromEmployeeTable(db);
+            const query =
+                'SELECT CONCAT(employee_role.first_name, " ", employee_role.last_name) AS Employee, title as "Role", salary as "Salary",  name as "Department",  CONCAT (employee_manager.first_name, " ", employee_manager.last_name) as "Manager"  FROM employee employee_role LEFT JOIN role ON employee_role.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee employee_manager ON employee_role.manager_id = employee_manager.id;';
+            const data = await db.query(query);
             console.table(data);
         }
         if (option === "updateEmployeeRole") {
