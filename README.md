@@ -1,6 +1,6 @@
 # **Employee Tracker** ![MIT](https://img.shields.io/github/license/DarionRichards/employee-tracker?color=teal)
 
-# Table of Contents
+## Table of Contents
 
 ### 1. [Description](#introduction)
 
@@ -18,32 +18,32 @@
 
 #
 
-# Description
+## Description
 
 I have been approached to create a **Content Management System (CMS)** interface in order to allow non-developers to easily view and interact with information stored in a database.
 
 This project will all non-developers within a company to, easily add, view, delete and calculate rows/columns within a databases table. Users will be able to create Departments, Roles that are linked to a department and Employees that are linked to a specific role. Below you can see an ERD diagram representing those relationships.
 
-# Demo of Employee Tracker CMS
+## Demo of Employee Tracker CMS
 
 ![portfolio demo](./assets/img/employee-table.png)
 
 https://watch.screencastify.com/v/tDrlYQLS48YKydB8TfC1
 
-# Technologies Used
+## Technologies Used
 
 - JavaScript
 - Node.js
 - SQL
 
-## Packages/Modules Used
+### Packages/Modules Used
 
 - Express
 - Inquirer
 - MySQL2
 - console.table
 
-# User Flow
+## User Flow
 
 ```md
 GIVEN a command-line application that accepts user input
@@ -72,9 +72,9 @@ WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 ```
 
-# Getting Started
+## Getting Started
 
-## Install Application
+### Install Application
 
 ```
 git clone git@github.com:DarionRichards/employee-tracker.git
@@ -82,16 +82,16 @@ cd employee-tracker
 npm i
 ```
 
-## Start Application
+### Start Application
 
 ```
 npm run start
 ```
 
-# Tests
+## Tests
 
 Tests were not required.
 
-# License
+## License
 
 ![MIT](https://img.shields.io/github/license/DarionRIchards/employee-tracker?color=teal&style=for-the-badge)
