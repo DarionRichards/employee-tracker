@@ -49,6 +49,18 @@ const introQuestions = [{
             value: "deleteDepartment",
         },
         {
+            name: "Delete a Role",
+            value: "deleteRole",
+        },
+        {
+            name: "Delete a Employee",
+            value: "deleteEmployee",
+        },
+        {
+            name: "Calculate Department Utilized Budget",
+            value: "calcUtilBudget",
+        },
+        {
             name: "Quit",
             value: "quit",
         },
@@ -133,11 +145,47 @@ const updateManagerQuestions = async(db) => {
     ];
 };
 
-const getDepartmentChoice = async(db) => {
+const viewDepartmentQuestion = async(db) => {
     return [{
         type: "list",
         name: "department",
         message: "Please choose the department to view:",
+        choices: await getDepartments(db),
+    }, ];
+};
+
+const deleteDepartmentQuestion = async(db) => {
+    return [{
+        type: "list",
+        name: "department",
+        message: "Please choose the department to delete:",
+        choices: await getDepartments(db),
+    }, ];
+};
+
+const deleteRoleQuestion = async(db) => {
+    return [{
+        type: "list",
+        name: "role",
+        message: "Please choose the role to delete:",
+        choices: await getRoles(db),
+    }, ];
+};
+
+const deleteEmployeeQuestion = async(db) => {
+    return [{
+        type: "list",
+        name: "employee",
+        message: "Please choose the employee to delete:",
+        choices: await getEmployee(db),
+    }, ];
+};
+
+const calcUtilBudget = async(db) => {
+    return [{
+        type: "list",
+        name: "department",
+        message: "Please choose a department:",
         choices: await getDepartments(db),
     }, ];
 };
@@ -149,5 +197,9 @@ module.exports = {
     employeeQuestions,
     updateRoleQuestions,
     updateManagerQuestions,
-    getDepartmentChoice,
+    viewDepartmentQuestion,
+    deleteDepartmentQuestion,
+    deleteRoleQuestion,
+    deleteEmployeeQuestion,
+    calcUtilBudget,
 };

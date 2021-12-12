@@ -9,7 +9,11 @@ const {
     employeeQuestions,
     updateRoleQuestions,
     updateManagerQuestions,
-    getDepartmentChoice,
+    viewDepartmentQuestion,
+    deleteDepartmentQuestion,
+    deleteRoleQuestion,
+    deleteEmployeeQuestion,
+    calcUtilBudget,
 } = require("./utils/questions");
 
 // import DB
@@ -131,7 +135,7 @@ const start = async() => {
 
         if (option === "viewEmployeeDepo") {
             // await choice of department
-            const questions = await getDepartmentChoice(db);
+            const questions = await viewDepartmentQuestion(db);
             const { department } = await inquirer.prompt(questions);
             // query select employee where matches department
             const query = `SELECT first_name, last_name FROM employee INNER JOIN role ON employee.role_id = role.id WHERE department_id = ${department};`;
@@ -144,10 +148,28 @@ const start = async() => {
             console.table(data);
         }
         if (option === "deleteDepartment") {
-            const questions = await getDepartmentChoice(db);
+            const questions = await deleteDepartmentQuestion(db);
             const { department } = await inquirer.prompt(questions);
-            const query = `DELETE FROM department WHERE department.id = ${department};`;
+            const query = `DELETE FROM department WHERE id = ${department};`;
             await db.query(query);
+        }
+        if (option === "deleteRole") {
+            const questions = await deleteRoleQuestion(db);
+            const { role } = await inquirer.prompt(questions);
+            const query = `DELETE FROM role WHERE id = ${role};`;
+            await db.query(query);
+        }
+        if (option === "deleteEmployee") {
+            const questions = await deleteEmployeeQuestion(db);
+            const { employee } = await inquirer.prompt(questions);
+            const query = `DELETE FROM employee WHERE id = ${employee};`;
+            await db.query(query);
+        }
+        if (option === "calcUtilBudget") {
+            const question = await calcUtilBudget(db);
+            const { department } = await inquirer.prompt(question);
+            const query = `SELECT SUM(salary) AS Total_Utilized_Budget FROM role WHERE department_id = ${department};`;
+            console.table(await db.query(query));
         }
         if (option === "quit") {
             active = false;
