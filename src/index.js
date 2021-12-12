@@ -27,6 +27,7 @@ const askDepartmentQuestions = async() =>
 
 // start app
 const start = async() => {
+    // db options
     const db = new Db({
         host: process.env.DB_HOST || "localhost",
         user: process.env.DB_USER || "root",
@@ -41,26 +42,24 @@ const start = async() => {
     while (active) {
         const { option } = await askIntroQuestions();
 
+        // department questions
         if (option === "addDepartment") {
             const { departmentName } = await askDepartmentQuestions();
-
             const query = `INSERT INTO department (name) VALUES ('${departmentName}');`;
             await db.query(query);
-
             console.log(`Added ${departmentName} into database!`);
         }
-
         if (option === "viewDepartment") {
             const query = "SELECT * FROM department";
             const data = await db.query(query);
             console.table(data);
         }
 
+        // role questions
         if (option === "addRole") {
-            // get departments, if non dont proceed.
             const query = `SELECT * FROM department;`;
             const departments = await db.query(query);
-
+            // check if departments available
             if (departments.length) {
                 const questions = await roleQuestions(db);
                 const { name, salary, department_id } = await inquirer.prompt(questions);
@@ -72,25 +71,20 @@ const start = async() => {
                 console.log("[ERROR]: Please enter a department before proceeding...");
             }
         }
-
         if (option === "viewRole") {
             const query = "SELECT * FROM role";
             const data = await db.query(query);
             console.table(data);
         }
 
+        // employee questions
         if (option === "addEmployee") {
-            // get roles
             const query = `SELECT * FROM role;`;
             const role = await db.query(query);
-
-            // if no roles, dont proceed
+            // check if roles available
             if (role.length) {
-                // get employee answers
                 const questions = await employeeQuestions(db);
                 const { firstName, lastName, role_id } = await inquirer.prompt(questions);
-
-                // query to database
                 const query = `INSERT INTO employee (first_name, last_name, role_id) VALUES ("${firstName}","${lastName}","${role_id}");`;
                 await db.query(query);
                 console.log(`Created ${firstName} ${lastName} as an employee!`);
@@ -98,13 +92,11 @@ const start = async() => {
                 console.log("[ERROR]: Please enter a role before proceeding...");
             }
         }
-
         if (option === "viewEmployee") {
             const query = "SELECT * FROM employee";
             const data = await db.query(query);
             console.table(data);
         }
-
         if (option === "updateEmployeeRole") {
             const employeeQuery = "SELECT * FROM employee;";
             const employee = await db.query(employeeQuery);
@@ -112,13 +104,10 @@ const start = async() => {
             if (employee.length) {
                 const questions = await updateRoleQuestions(db);
                 const { employees, role_id } = await inquirer.prompt(questions);
-                console.log(employees);
-                // query to database
                 const query = `UPDATE employee SET role_id = ${role_id} WHERE id = ${employees};`;
                 await db.query(query);
             }
         }
-
         if (option === "updateEmployeeManager") {
             const employeeQuery = "SELECT * FROM employee;";
             const employee = await db.query(employeeQuery);
@@ -126,27 +115,27 @@ const start = async() => {
             if (employee.length) {
                 const questions = await updateManagerQuestions(db);
                 const { employee, manager } = await inquirer.prompt(questions);
-                console.log(employee, manager);
 
                 const query = `UPDATE employee SET manager_id = ${manager} WHERE id = ${employee};`;
                 await db.query(query);
             }
         }
-
         if (option === "viewEmployeeDepo") {
-            // await choice of department
             const questions = await viewDepartmentQuestion(db);
             const { department } = await inquirer.prompt(questions);
-            // query select employee where matches department
             const query = `SELECT first_name, last_name FROM employee INNER JOIN role ON employee.role_id = role.id WHERE department_id = ${department};`;
             console.table(await db.query(query));
         }
+
+        // view managers
         if (option === "viewManager") {
             const managerQuery =
                 "SELECT first_name AS firstName, last_name AS lastName FROM employee WHERE manager_id IS NULL;";
             const data = await db.query(managerQuery);
             console.table(data);
         }
+
+        // delete options
         if (option === "deleteDepartment") {
             const questions = await deleteDepartmentQuestion(db);
             const { department } = await inquirer.prompt(questions);
@@ -171,8 +160,11 @@ const start = async() => {
             const query = `SELECT SUM(salary) AS Total_Utilized_Budget FROM role WHERE department_id = ${department};`;
             console.table(await db.query(query));
         }
+
+        // end application
         if (option === "quit") {
             active = false;
+            // close db connection
             db.stop();
             console.log("Goodbye!");
         }
