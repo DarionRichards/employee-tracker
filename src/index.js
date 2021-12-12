@@ -1,6 +1,13 @@
 // import modules
 const inquirer = require("inquirer");
 
+// import functions
+const {
+    selectAllFromDepartmentTable,
+    selectAllFromRoleTable,
+    selectAllFromEmployeeTable,
+} = require("./utils/queries");
+
 // import questions
 const {
     introQuestions,
@@ -57,8 +64,7 @@ const start = async() => {
 
         // role questions
         if (option === "addRole") {
-            const query = `SELECT * FROM department;`;
-            const departments = await db.query(query);
+            const departments = await selectAllFromDepartmentTable(db);
             // check if departments available
             if (departments.length) {
                 const questions = await roleQuestions(db);
@@ -68,38 +74,35 @@ const start = async() => {
                 await db.query(query);
                 console.log(`Added ${name} into Role Table!`);
             } else {
-                console.log("[ERROR]: Please enter a department before proceeding...");
+                console.warn("[ERROR]: Please enter a department before proceeding...");
             }
         }
         if (option === "viewRole") {
-            const query = "SELECT * FROM role";
-            const data = await db.query(query);
+            const data = await selectAllFromRoleTable(db);
             console.table(data);
         }
 
         // employee questions
         if (option === "addEmployee") {
-            const query = `SELECT * FROM role;`;
-            const role = await db.query(query);
+            const role = await selectAllFromRoleTable(db);
             // check if roles available
             if (role.length) {
                 const questions = await employeeQuestions(db);
                 const { firstName, lastName, role_id } = await inquirer.prompt(questions);
+
                 const query = `INSERT INTO employee (first_name, last_name, role_id) VALUES ("${firstName}","${lastName}","${role_id}");`;
                 await db.query(query);
                 console.log(`Created ${firstName} ${lastName} as an employee!`);
             } else {
-                console.log("[ERROR]: Please enter a role before proceeding...");
+                console.warn("[ERROR]: Please enter a role before proceeding...");
             }
         }
         if (option === "viewEmployee") {
-            const query = "SELECT * FROM employee";
-            const data = await db.query(query);
+            const data = await selectAllFromEmployeeTable(db);
             console.table(data);
         }
         if (option === "updateEmployeeRole") {
-            const employeeQuery = "SELECT * FROM employee;";
-            const employee = await db.query(employeeQuery);
+            const employee = await selectAllFromEmployeeTable(db);
 
             if (employee.length) {
                 const questions = await updateRoleQuestions(db);
@@ -109,9 +112,8 @@ const start = async() => {
             }
         }
         if (option === "updateEmployeeManager") {
-            const employeeQuery = "SELECT * FROM employee;";
-            const employee = await db.query(employeeQuery);
-            console.table(employee);
+            const employee = await selectAllFromEmployeeTable(db);
+
             if (employee.length) {
                 const questions = await updateManagerQuestions(db);
                 const { employee, manager } = await inquirer.prompt(questions);
@@ -163,6 +165,7 @@ const start = async() => {
 
         // end application
         if (option === "quit") {
+            // close while loop
             active = false;
             // close db connection
             db.stop();
