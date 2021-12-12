@@ -10,8 +10,8 @@ const {
 
 // import questions
 const {
-    introQuestions,
-    departmentQuestions,
+    askMenuQuestions,
+    askDepartmentQuestions,
     roleQuestions,
     employeeQuestions,
     updateRoleQuestions,
@@ -26,12 +26,6 @@ const {
 // import DB
 const Db = require("./db/Db");
 
-// ask functions
-const askIntroQuestions = async() => await inquirer.prompt(introQuestions);
-
-const askDepartmentQuestions = async() =>
-    await inquirer.prompt(departmentQuestions);
-
 // start app
 const start = async() => {
     // db options
@@ -42,23 +36,24 @@ const start = async() => {
         database: process.env.DB_NAME || "company_db",
     });
 
+    // create connection to database
     await db.start();
 
     let active = true;
 
     while (active) {
-        const { option } = await askIntroQuestions();
+        const { option } = await askMenuQuestions(inquirer);
+        console.log(option);
 
         // department questions
         if (option === "addDepartment") {
-            const { departmentName } = await askDepartmentQuestions();
+            const { departmentName } = await askDepartmentQuestions(inquirer);
             const query = `INSERT INTO department (name) VALUES ('${departmentName}');`;
             await db.query(query);
             console.log(`Added ${departmentName} into database!`);
         }
         if (option === "viewDepartment") {
-            const query = "SELECT * FROM department";
-            const data = await db.query(query);
+            const data = await selectAllFromDepartmentTable(db);
             console.table(data);
         }
 

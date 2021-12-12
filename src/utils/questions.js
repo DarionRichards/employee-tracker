@@ -1,78 +1,87 @@
 const { getDepartments, getRoles, getEmployee } = require("./choices");
 
-const introQuestions = [{
-    type: "list",
-    name: "option",
-    message: "Please choose from one of the following options: ",
-    choices: [{
-            name: "Add a Department",
-            value: "addDepartment",
-        },
-        {
-            name: "View All Departments",
-            value: "viewDepartment",
-        },
-        {
-            name: "Add a Role",
-            value: "addRole",
-        },
-        {
-            name: "View All Roles",
-            value: "viewRole",
-        },
-        {
-            name: "Add a Employee",
-            value: "addEmployee",
-        },
-        {
-            name: "View All Employees",
-            value: "viewEmployee",
-        },
-        {
-            name: "Update an Employee's Role",
-            value: "updateEmployeeRole",
-        },
-        {
-            name: "Update an Employee's Manager",
-            value: "updateEmployeeManager",
-        },
-        {
-            name: "View Employees by Department",
-            value: "viewEmployeeDepo",
-        },
-        {
-            name: "View All Managers",
-            value: "viewManager",
-        },
-        {
-            name: "Delete a Department",
-            value: "deleteDepartment",
-        },
-        {
-            name: "Delete a Role",
-            value: "deleteRole",
-        },
-        {
-            name: "Delete a Employee",
-            value: "deleteEmployee",
-        },
-        {
-            name: "Calculate Department Utilized Budget",
-            value: "calcUtilBudget",
-        },
-        {
-            name: "Quit",
-            value: "quit",
-        },
-    ],
-}, ];
+const askMenuQuestions = async(inquirer) => {
+    const questions = [{
+        type: "list",
+        name: "option",
+        message: "Please choose from one of the following options: ",
+        choices: [{
+                name: "Add a Department",
+                value: "addDepartment",
+            },
+            {
+                name: "View All Departments",
+                value: "viewDepartment",
+            },
+            {
+                name: "Add a Role",
+                value: "addRole",
+            },
+            {
+                name: "View All Roles",
+                value: "viewRole",
+            },
+            {
+                name: "Add a Employee",
+                value: "addEmployee",
+            },
+            {
+                name: "View All Employees",
+                value: "viewEmployee",
+            },
+            {
+                name: "Update an Employee's Role",
+                value: "updateEmployeeRole",
+            },
+            {
+                name: "Update an Employee's Manager",
+                value: "updateEmployeeManager",
+            },
+            {
+                name: "View Employees by Department",
+                value: "viewEmployeeDepo",
+            },
+            {
+                name: "View All Managers",
+                value: "viewManager",
+            },
+            {
+                name: "Delete a Department",
+                value: "deleteDepartment",
+            },
+            {
+                name: "Delete a Role",
+                value: "deleteRole",
+            },
+            {
+                name: "Delete a Employee",
+                value: "deleteEmployee",
+            },
+            {
+                name: "Calculate Department Utilized Budget",
+                value: "calcUtilBudget",
+            },
+            {
+                name: "Quit",
+                value: "quit",
+            },
+        ],
+    }, ];
 
-const departmentQuestions = [{
-    type: "input",
-    name: "departmentName",
-    message: "Please enter the Department name:",
-}, ];
+    const answer = await inquirer.prompt(questions);
+    return answer;
+};
 
+const askDepartmentQuestions = async(inquirer) => {
+    const question = [{
+        type: "input",
+        name: "departmentName",
+        message: "Please enter the Department name:",
+    }, ];
+
+    const answer = inquirer.prompt(question);
+    return answer;
+};
 const roleQuestions = async(db) => [{
         type: "input",
         name: "name",
@@ -173,8 +182,8 @@ const calcUtilBudget = async(db) => [{
 }, ];
 
 module.exports = {
-    introQuestions,
-    departmentQuestions,
+    askMenuQuestions,
+    askDepartmentQuestions,
     roleQuestions,
     employeeQuestions,
     updateRoleQuestions,
