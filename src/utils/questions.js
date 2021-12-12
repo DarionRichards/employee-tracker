@@ -33,6 +33,10 @@ const introQuestions = [{
             value: "updateEmployeeRole",
         },
         {
+            name: "Update an Employee's Manager",
+            value: "updateEmployeeManager",
+        },
+        {
             name: "Quit",
             value: "quit",
         },
@@ -101,10 +105,27 @@ const updateRoleQuestions = async(db) => {
     ];
 };
 
+const updateManagerQuestions = async(db) => {
+    return [{
+            type: "list",
+            name: "employee",
+            message: "Please choose an employee to update:",
+            choices: await getEmployee(db),
+        },
+        {
+            type: "list",
+            name: "manager",
+            message: "Please choose the correct manager:",
+            choices: await getEmployee(db),
+        },
+    ];
+};
+
 module.exports = {
     introQuestions,
     departmentQuestions,
     roleQuestions,
     employeeQuestions,
     updateRoleQuestions,
+    updateManagerQuestions,
 };

@@ -8,6 +8,7 @@ const {
     roleQuestions,
     employeeQuestions,
     updateRoleQuestions,
+    updateManagerQuestions,
 } = require("./utils/questions");
 
 // import DB
@@ -112,8 +113,23 @@ const start = async() => {
                 await db.query(query);
             }
         }
+
+        if (option === "updateEmployeeManager") {
+            const employeeQuery = "SELECT * FROM employee;";
+            const employee = await db.query(employeeQuery);
+            console.table(employee);
+            if (employee.length) {
+                const questions = await updateManagerQuestions(db);
+                const { employee, manager } = await inquirer.prompt(questions);
+                console.log(employee, manager);
+
+                const query = `UPDATE employee SET manager_id = ${manager} WHERE id = ${employee};`;
+                await db.query(query);
+            }
+        }
         if (option === "quit") {
             active = false;
+            db.end();
             console.log("Goodbye!");
         }
     }
