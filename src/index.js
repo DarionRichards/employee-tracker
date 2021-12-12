@@ -143,6 +143,12 @@ const start = async() => {
             const data = await db.query(managerQuery);
             console.table(data);
         }
+        if (option === "deleteDepartment") {
+            const questions = await getDepartmentChoice(db);
+            const { department } = await inquirer.prompt(questions);
+            const query = `DELETE FROM department WHERE department.id = ${department};`;
+            await db.query(query);
+        }
         if (option === "quit") {
             active = false;
             db.end();

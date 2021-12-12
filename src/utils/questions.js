@@ -45,6 +45,10 @@ const introQuestions = [{
             value: "viewManager",
         },
         {
+            name: "Delete a Department",
+            value: "deleteDepartment",
+        },
+        {
             name: "Quit",
             value: "quit",
         },
