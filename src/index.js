@@ -7,6 +7,7 @@ const {
     departmentQuestions,
     roleQuestions,
     employeeQuestions,
+    updateRoleQuestions,
 } = require("./utils/questions");
 
 // import DB
@@ -17,9 +18,6 @@ const askIntroQuestions = async() => await inquirer.prompt(introQuestions);
 
 const askDepartmentQuestions = async() =>
     await inquirer.prompt(departmentQuestions);
-
-const askEmployeeQuestions = async() =>
-    await inquirer.prompt(employeeQuestions);
 
 // start app
 const start = async() => {
@@ -102,7 +100,17 @@ const start = async() => {
         }
 
         if (option === "updateEmployeeRole") {
-            console.log("Update Employees");
+            const employeeQuery = "SELECT * FROM employee;";
+            const employee = await db.query(employeeQuery);
+
+            if (employee.length) {
+                const questions = await updateRoleQuestions(db);
+                const { employees, role_id } = await inquirer.prompt(questions);
+                console.log(employees);
+                // query to database
+                const query = `UPDATE employee SET role_id = ${role_id} WHERE id = ${employees};`;
+                await db.query(query);
+            }
         }
         if (option === "quit") {
             active = false;

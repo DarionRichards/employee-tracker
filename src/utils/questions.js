@@ -1,4 +1,4 @@
-const { getDepartments, getRoles } = require("./choices");
+const { getDepartments, getRoles, getEmployee } = require("./choices");
 
 const introQuestions = [{
     type: "list",
@@ -29,7 +29,7 @@ const introQuestions = [{
             value: "viewEmployee",
         },
         {
-            name: "Add an Employee's Role",
+            name: "Update an Employee's Role",
             value: "updateEmployeeRole",
         },
         {
@@ -85,9 +85,26 @@ const employeeQuestions = async(db) => {
     ];
 };
 
+const updateRoleQuestions = async(db) => {
+    return [{
+            type: "list",
+            name: "employees",
+            message: "Please choose an employee to update:",
+            choices: await getEmployee(db),
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "Please choose the role to update an employee:",
+            choices: await getRoles(db),
+        },
+    ];
+};
+
 module.exports = {
     introQuestions,
     departmentQuestions,
     roleQuestions,
     employeeQuestions,
+    updateRoleQuestions,
 };

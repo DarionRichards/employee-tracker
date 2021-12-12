@@ -24,7 +24,21 @@ const getRoles = async(db) => {
     return choices;
 };
 
+const getEmployee = async(db) => {
+    const employees = await db.query("SELECT * FROM employee");
+
+    const choices = employees.map((employee) => {
+        return {
+            name: `${employee.first_name} ${employee.last_name}`,
+            value: employee.id,
+        };
+    });
+
+    return choices;
+};
+
 module.exports = {
     getDepartments,
     getRoles,
+    getEmployee,
 };
