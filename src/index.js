@@ -173,7 +173,7 @@ const start = async() => {
         }
         if (option === "quit") {
             active = false;
-            db.end();
+            db.stop();
             console.log("Goodbye!");
         }
     }
