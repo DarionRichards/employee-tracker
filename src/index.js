@@ -9,7 +9,7 @@ const {
     employeeQuestions,
     updateRoleQuestions,
     updateManagerQuestions,
-    viewEmployeeByDepoQuestions,
+    getDepartmentChoice,
 } = require("./utils/questions");
 
 // import DB
@@ -137,7 +137,7 @@ const start = async() => {
         }
         if (option === "viewEmployeeDepo") {
             // await choice of department
-            const questions = await viewEmployeeByDepoQuestions(db);
+            const questions = await getDepartmentChoice(db);
             const { department } = await inquirer.prompt(questions);
             // query select employee where matches department
             const query = `SELECT first_name, last_name FROM employee INNER JOIN role ON employee.role_id = role.id WHERE department_id = ${department};`;

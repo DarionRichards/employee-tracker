@@ -129,7 +129,7 @@ const updateManagerQuestions = async(db) => {
     ];
 };
 
-const viewEmployeeByDepoQuestions = async(db) => {
+const getDepartmentChoice = async(db) => {
     return [{
         type: "list",
         name: "department",
@@ -145,5 +145,5 @@ module.exports = {
     employeeQuestions,
     updateRoleQuestions,
     updateManagerQuestions,
-    viewEmployeeByDepoQuestions,
+    getDepartmentChoice,
 };
