@@ -41,6 +41,10 @@ const introQuestions = [{
             value: "viewManager",
         },
         {
+            name: "View Employees by Department",
+            value: "viewEmployeeDepo",
+        },
+        {
             name: "Quit",
             value: "quit",
         },
@@ -125,6 +129,15 @@ const updateManagerQuestions = async(db) => {
     ];
 };
 
+const viewEmployeeByDepoQuestions = async(db) => {
+    return [{
+        type: "list",
+        name: "department",
+        message: "Please choose the department to view:",
+        choices: await getDepartments(db),
+    }, ];
+};
+
 module.exports = {
     introQuestions,
     departmentQuestions,
@@ -132,4 +145,5 @@ module.exports = {
     employeeQuestions,
     updateRoleQuestions,
     updateManagerQuestions,
+    viewEmployeeByDepoQuestions,
 };

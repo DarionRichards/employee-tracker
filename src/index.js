@@ -9,6 +9,7 @@ const {
     employeeQuestions,
     updateRoleQuestions,
     updateManagerQuestions,
+    viewEmployeeByDepoQuestions,
 } = require("./utils/questions");
 
 // import DB
@@ -133,6 +134,14 @@ const start = async() => {
                 "SELECT first_name AS firstName, last_name AS lastName FROM employee WHERE manager_id IS NULL;";
             const data = await db.query(managerQuery);
             console.table(data);
+        }
+        if (option === "viewEmployeeDepo") {
+            // await choice of department
+            const questions = await viewEmployeeByDepoQuestions(db);
+            const { department } = await inquirer.prompt(questions);
+            // query select employee where matches department
+            const query = `SELECT first_name, last_name FROM employee INNER JOIN role ON employee.role_id = role.id WHERE department_id = ${department};`;
+            console.table(await db.query(query));
         }
         if (option === "quit") {
             active = false;
