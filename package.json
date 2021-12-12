@@ -1,0 +1,25 @@
+{
+    "name": "employee-tracker",
+    "version": "1.0.0",
+    "description": "For this project, I have created a command line (CRUD) application, where users are able to Add, Read, Update and Delete employees from a MySQL Database.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node src/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DarionRichards/employee-tracker.git"
+    },
+    "keywords": [],
+    "author": "https://github.com/DarionRichards",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/DarionRichards/employee-tracker/issues"
+    },
+    "homepage": "https://github.com/DarionRichards/employee-tracker#readme",
+    "dependencies": {
+        "console.table": "^0.10.0",
+        "inquirer": "^8.2.0",
+        "mysql2": "^2.3.3"
+    }
+}
