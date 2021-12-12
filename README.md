@@ -22,7 +22,7 @@
 
 I have been approached to create a **Content Management System (CMS)** interface in order to allow non-developers to easily view and interact with information stored in a database.
 
-This project will all non-developers within a company to, easily add, view, delete and calculate rows/columns within a databases table. Users will be able to create Departments, Roles that are linked to a department and Employees that are linked to a specific role. Below you can see an ERD diagram representing those relationships.
+This project will allow non-developers within a company to, easily add, view, delete and calculate rows/columns within a databases table. Users will be able to create Departments, Roles that are linked to a department and Employees that are linked to a specific role. Below you can see an ERD diagram representing those relationships.
 
 ## Demo of Employee Tracker CMS
 
